@@ -12,6 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Post = void 0;
 const typeorm_1 = require("typeorm");
 const User_1 = require("./User");
+const Coments_1 = require("./Coments");
+const Likes_1 = require("./Likes");
 let Post = class Post {
 };
 exports.Post = Post;
@@ -19,6 +21,10 @@ __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], Post.prototype, "id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Date)
+], Post.prototype, "createdAt", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
@@ -31,6 +37,18 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => User_1.User, user => user.posts),
     __metadata("design:type", User_1.User)
 ], Post.prototype, "user", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => Coments_1.Coments, coments => coments.post),
+    __metadata("design:type", Array)
+], Post.prototype, "coments", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => Likes_1.Likes, likes => likes.post),
+    __metadata("design:type", Array)
+], Post.prototype, "likes", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Post.prototype, "tempoexp", void 0);
 exports.Post = Post = __decorate([
     (0, typeorm_1.Entity)()
 ], Post);

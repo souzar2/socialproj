@@ -10,5 +10,6 @@
     "esModuleInterop": true
   },
   "include": ["src/**/*", "tsconfig.json"],
-  "exclude": ["dist"]
+  "exclude": ["dist"],
+  "typeRoots": ["./src/types", "./node_modules/@types"]
 }

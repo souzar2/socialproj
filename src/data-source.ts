@@ -4,9 +4,8 @@ import { Post } from "./entities/Post";
 import dotenv from "dotenv";
 dotenv.config();
 
-import { Entity, 
-  PrimaryGeneratedColumn, 
-  Column } from "typeorm";
+import { Likes } from "./entities/Likes";
+import { Coments } from "./entities/Coments";
 
 export const AppDataSource = new DataSource({
   type: process.env.DB_TYPE as "mysql", 
@@ -17,5 +16,5 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: false,
-  entities: [User, Post],
+  entities: [User, Post, Likes, Coments],
 });
