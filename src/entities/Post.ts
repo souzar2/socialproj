@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn } from 'typeorm';
 import { User } from './User';
 import { Coments } from './Coments';
 import { Likes } from './Likes';
@@ -8,16 +8,16 @@ export class Post {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @CreateDateColumn()
   createdAt: Date;
-  
-  @Column()
-  imageUrl: string;
+
+  @Column({ type: "longtext"})
+  imageBase64: string; //base64
 
   @Column({ nullable: true })
   caption: string;
 
-  @ManyToOne(() => User, user => user.posts)
+  @ManyToOne(() => User, user => user.posts, { nullable: false })
   user: User;
 
   @OneToMany(() => Coments, coments => coments.post)
@@ -26,6 +26,7 @@ export class Post {
   @OneToMany(() => Likes, likes => likes.post)
   likes: Likes[];
 
-  @Column()
+  @Column({ default: 1 })
   tempoexp: number;
+  
 }

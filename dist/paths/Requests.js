@@ -20,15 +20,14 @@ const typeorm_1 = require("typeorm");
 const User_1 = require("../entities/User");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const router = (0, express_1.Router)();
-router.get("/posts", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/feed", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
         const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(" ")[1];
-        console.log("token: ", token);
         try {
-            const decoded = jsonwebtoken_1.default.verify(token, (process.env.JWT_SECRET || "segredo_super_secreto"));
-            console.log("decoded: ", decoded);
+            const decoded = jsonwebtoken_1.default.verify(token, (process.env.JWT_SECRET));
             const userId = decoded.id;
+            console.log("userId: ", userId);
             const posts = yield data_source_1.AppDataSource.getRepository(Post_1.Post).find({
                 where: {
                     user: { id: (0, typeorm_1.Not)(userId) }
@@ -73,7 +72,6 @@ router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const userLogin = req.body.user;
         const email = userLogin.email;
         const password = userLogin.password;
-        const username = userLogin.username;
         const users = yield data_source_1.AppDataSource.getRepository(User_1.User).find({});
         const newUser = yield data_source_1.AppDataSource.getRepository(User_1.User).findOne({
             where: {
@@ -100,6 +98,36 @@ router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     catch (erro) {
         console.log(erro);
         res.status(500).json({ Erro: "Erro ao efetuar o login" });
+    }
+}));
+//-------------------------------------------------
+router.post("/addPost", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const newPost = req.body.newPost;
+    const imageBase64 = newPost.imageBase64;
+    const caption = newPost.caption;
+    try {
+        const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(" ")[1];
+        console.log("token: ", token);
+        const decoded = jsonwebtoken_1.default.verify(token, (process.env.JWT_SECRET));
+        console.log("decoded: ", decoded);
+        const userId = decoded.id;
+        // const user = await AppDataSource.getRepository(User).findOne({ where: { id: userId }})
+        const newPost = yield data_source_1.AppDataSource.getRepository(Post_1.Post).save({
+            imageBase64: imageBase64,
+            caption: caption,
+            user: { id: userId },
+            coments: [],
+            likes: []
+        }).catch(erro => {
+            console.log("Erro ao salvar o post: ", erro);
+            return res.status(401).json({ error: "Erro ao salvar o post" });
+        });
+        return res.json({ result: "Post publicado com sucesso!", user: newPost });
+    }
+    catch (erro) {
+        console.log("Erro ao encontrar o id de usuario responsável pelo post");
+        return res.status(401).json({ error: "Token inválido ou expirado" });
     }
 }));
 exports.default = router;

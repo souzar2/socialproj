@@ -14,10 +14,11 @@ router.get("/feed", async (req, res) => {
         const token = req.headers.authorization?.split(" ")[1];
 
         try {
-            const decoded = jwt.verify(token, (process.env.JWT_SECRET || "segredo_super_secreto"));
-            
+            const decoded = jwt.verify(token, (process.env.JWT_SECRET));
+
             const userId = decoded.id;
-            
+            console.log("userId: ", userId)
+
             const posts = await AppDataSource.getRepository(Post).find({
                 where: {
                     user: { id: Not(userId) }
@@ -25,17 +26,17 @@ router.get("/feed", async (req, res) => {
                 relations: ["user", "coments", "likes"],
                 order: { createdAt: "DESC" }
             });
-    
+
             res.json(posts);
         } catch (err) {
             return res.status(401).json({ error: "Token inválido ou expirado" });
         }
 
-        } catch (erro) {
-            console.error(erro);
-            res.status(500).json({ error: "Erro ao buscar feed" });
-        }
-    });
+    } catch (erro) {
+        console.error(erro);
+        res.status(500).json({ error: "Erro ao buscar feed" });
+    }
+});
 
 router.post("/signin", async (req, res) => {
     try {
@@ -63,11 +64,9 @@ router.post("/signin", async (req, res) => {
 
 router.post("/login", async (req, res) => {
     try {
-
         const userLogin = req.body.user
         const email = userLogin.email
         const password = userLogin.password
-        const username = userLogin.username
 
         const users = await AppDataSource.getRepository(User).find({})
 
@@ -104,6 +103,38 @@ router.post("/login", async (req, res) => {
         console.log(erro)
         res.status(500).json({ Erro: "Erro ao efetuar o login" });
     }
+})
+
+//-------------------------------------------------
+
+router.post("/addPost", async (req, res) => {
+    const newPost = req.body.newPost
+
+    const imageBase64 = newPost.imageBase64
+    const caption = newPost.caption
+    try {
+        const token = req.headers.authorization?.split(" ")[1];
+        const decoded = jwt.verify(token, (process.env.JWT_SECRET));
+        const userId = decoded.id;
+
+        // const user = await AppDataSource.getRepository(User).findOne({ where: { id: userId }})
+        const newPost = await AppDataSource.getRepository(Post).save({
+            imageBase64: imageBase64,
+            caption: caption,
+            user: { id: userId },
+            coments: [],
+            likes: []
+        }).catch(erro => {
+            console.log("Erro ao salvar o post: ", erro)
+            return res.status(401).json({ error: "Erro ao salvar o post" });
+        })
+
+        return res.json({ result: "Post publicado com sucesso!", user: newPost });
+    } catch (erro) {
+        console.log("Erro ao encontrar o id de usuario responsável pelo post")
+        return res.status(401).json({ error: "Token inválido ou expirado" });
+    }
+
 })
 
 export default router

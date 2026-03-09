@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppDataSource = void 0;
+require("reflect-metadata");
 const typeorm_1 = require("typeorm");
 const User_1 = require("./entities/User");
 const Post_1 = require("./entities/Post");
@@ -21,4 +22,5 @@ exports.AppDataSource = new typeorm_1.DataSource({
     synchronize: true,
     logging: false,
     entities: [User_1.User, Post_1.Post, Likes_1.Likes, Coments_1.Coments],
+    //"src/entity/*.ts"
 });

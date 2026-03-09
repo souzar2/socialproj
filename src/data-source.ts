@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { User } from "./entities/User";
 import { Post } from "./entities/Post";
@@ -17,4 +18,5 @@ export const AppDataSource = new DataSource({
   synchronize: true,
   logging: false,
   entities: [User, Post, Likes, Coments],
+  //"src/entity/*.ts"
 });

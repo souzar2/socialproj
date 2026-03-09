@@ -22,19 +22,19 @@ __decorate([
     __metadata("design:type", Number)
 ], Post.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], Post.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: "longtext" }),
     __metadata("design:type", String)
-], Post.prototype, "imageUrl", void 0);
+], Post.prototype, "imageBase64", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Post.prototype, "caption", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => User_1.User, user => user.posts),
+    (0, typeorm_1.ManyToOne)(() => User_1.User, user => user.posts, { nullable: false }),
     __metadata("design:type", User_1.User)
 ], Post.prototype, "user", void 0);
 __decorate([
@@ -46,7 +46,7 @@ __decorate([
     __metadata("design:type", Array)
 ], Post.prototype, "likes", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ default: 1 }),
     __metadata("design:type", Number)
 ], Post.prototype, "tempoexp", void 0);
 exports.Post = Post = __decorate([
