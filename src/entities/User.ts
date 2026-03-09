@@ -20,7 +20,7 @@ export class User {
   @OneToMany(() => Post, post => post.user)
   posts: Post[];
 
-  @OneToMany(() => Coments, coments => coments.from)
+  @OneToMany(() => Coments, coments => coments.from) 
   coments: Coments[];
 
   @OneToMany(() => Likes, likes => likes.from)
