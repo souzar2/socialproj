@@ -14,12 +14,12 @@ Excluir posts
 
 Curtir e comentar posts de outros usuários
 
+
 🌐 Endpoints
 
 -/feed - Lista os posts de outros usuários
 
 -/signin - Cadastra novo usuário
-
 *body: {
     "user": {
         "email": "emailexempl@gmail.com",
@@ -29,7 +29,6 @@ Curtir e comentar posts de outros usuários
 }
 
 -/login - Fazer o login no sistema
-
 *body: {
     "user":{
         "email": "emailexempl@gmail.com",
@@ -39,7 +38,6 @@ Curtir e comentar posts de outros usuários
 }
 
 -/addPost - Adicionar novo post (que irá expirar em 1h)
-
 *body: {
     "newPost": {
         "caption": "legenda",
