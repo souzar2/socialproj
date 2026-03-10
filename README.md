@@ -14,10 +14,13 @@ Curtir e comentar posts de outros usuários
 
 🛠️ Tecnologias Utilizadas
 Linguagem:
+
 <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" alt="TypeScript" width="50" height="50"/>
 
-Framework / ORM:**
+Framework:
+
 <img src="https://raw.githubusercontent.com/typeorm/typeorm/master/resources/logo_big.png" alt="TypeORM" width="120" />
 
 Banco de Dados:
+
 <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="MySQL" width="50" height="50"/>
