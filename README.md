@@ -14,6 +14,39 @@ Excluir posts
 
 Curtir e comentar posts de outros usuários
 
+🌐 Endpoints
+
+-/feed - Lista os posts de outros usuários
+
+-/signin - Cadastra novo usuário
+
+*body: {
+    "user": {
+        "email": "emailexempl@gmail.com",
+        "password": "passwrd",
+        "username": "username"
+    }
+}
+
+-/login - Fazer o login no sistema
+
+*body: {
+    "user":{
+        "email": "emailexempl@gmail.com",
+        "password": "passwrd",
+        "username": "username"
+    }
+}
+
+-/addPost - Adicionar novo post (que irá expirar em 1h)
+
+*body: {
+    "newPost": {
+        "caption": "legenda",
+        "imageBase64": "imagem em bas64"
+        }
+}
+
 🛠️ Tecnologias Utilizadas
 Linguagem:
 
