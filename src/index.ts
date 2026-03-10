@@ -37,7 +37,7 @@ cron.schedule("* * * * *", async () => {
       console.log("Erro ao deletar itens expirados")
     }
   }
-}) 
+})
 
 AppDataSource.initialize()
   .then(() => {
