@@ -20,9 +20,7 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 //Rotina
 //cron.schedule("*/30 * * * *", async () => {
-
 cron.schedule("* * * * *", async () => {
-  console.log("Executando rotina a cada 30 minutos:", new Date());
   const result = await AppDataSource.getRepository(Post).createQueryBuilder("post")
     .where("DATE_ADD(post.createdAt, INTERVAL post.tempoexp HOUR) <= NOW()")
     .getMany();

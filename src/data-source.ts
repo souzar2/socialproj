@@ -19,4 +19,5 @@ export const AppDataSource = new DataSource({
   logging: false,
   entities: [User, Post, Likes, Coments],
   //"src/entity/*.ts"
+  //User, Post, Likes, Coments
 });

@@ -18,7 +18,7 @@ router.get("/feed", async (req, res) => {
             const decoded = jwt.verify(token, (process.env.JWT_SECRET));
 
             const userId = decoded.id;
-            console.log("userId: ", userId)
+            // console.log("userId: ", userId)
 
             const posts = await AppDataSource.getRepository(Post).find({
                 where: {
@@ -111,6 +111,7 @@ router.post("/login", async (req, res) => {
 router.post("/addPost", async (req, res) => {
     const newPost = req.body.newPost
 
+    //maximo de 50mb
     const imageBase64 = newPost.imageBase64 //await processarImagem(newPost.imageBase64)
     const caption = newPost.caption
     try {
@@ -118,7 +119,7 @@ router.post("/addPost", async (req, res) => {
         const decoded = jwt.verify(token, (process.env.JWT_SECRET));
         const userId = decoded.id;
 
-        console.log("userId: ", userId)
+        // console.log("userId: ", userId)
 
         // const user = await AppDataSource.getRepository(User).findOne({ where: { id: userId }})
         const newPost = await AppDataSource.getRepository(Post).save({

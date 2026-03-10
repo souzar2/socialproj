@@ -27,7 +27,7 @@ router.get("/feed", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         try {
             const decoded = jsonwebtoken_1.default.verify(token, (process.env.JWT_SECRET));
             const userId = decoded.id;
-            console.log("userId: ", userId);
+            // console.log("userId: ", userId);
             const posts = yield data_source_1.AppDataSource.getRepository(Post_1.Post).find({
                 where: {
                     user: { id: (0, typeorm_1.Not)(userId) }
@@ -110,7 +110,7 @@ router.post("/addPost", (req, res) => __awaiter(void 0, void 0, void 0, function
         const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(" ")[1];
         const decoded = jsonwebtoken_1.default.verify(token, (process.env.JWT_SECRET));
         const userId = decoded.id;
-        console.log("userId: ", userId);
+        // console.log("userId: ", userId);
         // const user = await AppDataSource.getRepository(User).findOne({ where: { id: userId }})
         const newPost = yield data_source_1.AppDataSource.getRepository(Post_1.Post).save({
             imageBase64: imageBase64,

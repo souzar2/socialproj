@@ -23,4 +23,5 @@ exports.AppDataSource = new typeorm_1.DataSource({
     logging: false,
     entities: [User_1.User, Post_1.Post, Likes_1.Likes, Coments_1.Coments],
     //"src/entity/*.ts"
+    //User, Post, Likes, Coments
 });

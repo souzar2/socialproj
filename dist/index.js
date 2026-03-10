@@ -33,9 +33,16 @@ node_cron_1.default.schedule("* * * * *", () => __awaiter(void 0, void 0, void 0
     const result = yield data_source_1.AppDataSource.getRepository(Post_1.Post).createQueryBuilder("post")
         .where("DATE_ADD(post.createdAt, INTERVAL post.tempoexp HOUR) <= NOW()")
         .getMany();
-    yield data_source_1.AppDataSource.getRepository(Post_1.Post).delete({ id: (0, typeorm_1.In)(result.map(item => item.id)) });
-    console.log("Posts expirados:", result.length);
-    result.forEach(p => console.log(`Post ${p.id} expirou`));
+    if (result.length > 0) {
+        try {
+            yield data_source_1.AppDataSource.getRepository(Post_1.Post).delete({ id: (0, typeorm_1.In)(result.map(item => item.id)) });
+            console.log("Posts expirados:", result.length);
+            result.forEach(p => console.log(`Post ${p.id} expirou`));
+        }
+        catch (erro) {
+            console.log("Erro ao deletar itens expirados");
+        }
+    }
 }));
 data_source_1.AppDataSource.initialize()
     .then(() => {
