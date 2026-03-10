@@ -6,6 +6,7 @@ import { Not } from "typeorm";
 import { User } from "../entities/User";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import { processarImagem } from "../utils";
 
 const router = Router();
 
@@ -110,12 +111,14 @@ router.post("/login", async (req, res) => {
 router.post("/addPost", async (req, res) => {
     const newPost = req.body.newPost
 
-    const imageBase64 = newPost.imageBase64
+    const imageBase64 = newPost.imageBase64 //await processarImagem(newPost.imageBase64)
     const caption = newPost.caption
     try {
         const token = req.headers.authorization?.split(" ")[1];
         const decoded = jwt.verify(token, (process.env.JWT_SECRET));
         const userId = decoded.id;
+
+        console.log("userId: ", userId)
 
         // const user = await AppDataSource.getRepository(User).findOne({ where: { id: userId }})
         const newPost = await AppDataSource.getRepository(Post).save({

@@ -6,7 +6,7 @@ import cron from "node-cron";
 
 import Requests from "./paths/Requests"
 import { Post } from "./entities/Post";
-import { LessThan } from "typeorm";
+import { In, LessThan } from "typeorm";
 
 const port = 4000
 const app = express();
@@ -19,14 +19,25 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 //Rotina
-cron.schedule("*/30 * * * *", async () => {
+//cron.schedule("*/30 * * * *", async () => {
+
+cron.schedule("* * * * *", async () => {
   console.log("Executando rotina a cada 30 minutos:", new Date());
-  const result = await AppDataSource.getRepository(Post).find({
-    where: {
-      
+  const result = await AppDataSource.getRepository(Post).createQueryBuilder("post")
+    .where("DATE_ADD(post.createdAt, INTERVAL post.tempoexp HOUR) <= NOW()")
+    .getMany();
+
+
+  if (result.length > 0) {
+    try {
+      await AppDataSource.getRepository(Post).delete({ id: In(result.map(item => item.id)) })
+      console.log("Posts expirados:", result.length);
+      result.forEach(p => console.log(`Post ${p.id} expirou`));
+    } catch (erro) {
+      console.log("Erro ao deletar itens expirados")
     }
-  })
-});
+  }
+})
 
 AppDataSource.initialize()
   .then(() => {

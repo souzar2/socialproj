@@ -104,14 +104,13 @@ router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* 
 router.post("/addPost", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const newPost = req.body.newPost;
-    const imageBase64 = newPost.imageBase64;
+    const imageBase64 = newPost.imageBase64; //await processarImagem(newPost.imageBase64)
     const caption = newPost.caption;
     try {
         const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(" ")[1];
-        console.log("token: ", token);
         const decoded = jsonwebtoken_1.default.verify(token, (process.env.JWT_SECRET));
-        console.log("decoded: ", decoded);
         const userId = decoded.id;
+        console.log("userId: ", userId);
         // const user = await AppDataSource.getRepository(User).findOne({ where: { id: userId }})
         const newPost = yield data_source_1.AppDataSource.getRepository(Post_1.Post).save({
             imageBase64: imageBase64,
