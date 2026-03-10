@@ -1,6 +1,7 @@
 📌 Projeto de Posts
 
 📖 Descrição
+
 Este projeto BackEnd tem como objetivo gerenciar e exibir posts de forma organizada. Ele foi desenvolvido para servir como base de um sistema de publicação simples, podendo ser expandido para blogs, redes sociais ou qualquer aplicação que envolva conteúdo escrito.
 Por padrão, os posts ficam disponíveis por apenas 1 hora e depois são removidos, isso pode ser modificado na tabela. Este projeto não possui fins comerciais, ele será utilizado em portfólio.
 
